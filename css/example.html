@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Clone Dummy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+        }
+
+        .library {
+            width: 250px;
+            background: rgb(20, 20, 20);
+            padding: 10px;
+        }
+
+        .all-music {
+            flex: 1;
+            background: rgb(35, 35, 35);
+            padding: 10px;
+        }
+
+        .play-music {
+            width: 250px;
+            background: rgb(25, 25, 25);
+            padding: 10px;
+        }
+
+        .drag-handle {
+            width: 5px;
+            cursor: ew-resize;
+            background: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="library" id="library">
+        <h3>Library</h3>
+    </div>
+    <div class="drag-handle" id="drag1"></div>
+    <div class="all-music" id="main">
+        <h3>All Music / Podcast</h3>
+    </div>
+    <div class="drag-handle" id="drag2"></div>
+    <div class="play-music" id="playMusic">
+        <h3>Now Playing</h3>
+    </div>
+
+    <script>
+        let isResizing = false;
+        let currentDrag = null;
+
+        document.getElementById("drag1").addEventListener("mousedown", function () {
+            isResizing = true;
+            currentDrag = "left";
+        });
+
+        document.getElementById("drag2").addEventListener("mousedown", function () {
+            isResizing = true;
+            currentDrag = "right";
+        });
+
+        document.addEventListener("mousemove", function (e) {
+            if (!isResizing) return;
+
+            if (currentDrag === "left") {
+                let newWidth = e.pageX;
+                if (newWidth > 150 && newWidth < 400) {
+                    document.getElementById("library").style.width = newWidth + "px";
+                }
+            }
+
+            if (currentDrag === "right") {
+                let totalWidth = window.innerWidth;
+                let newWidth = totalWidth - e.pageX;
+                if (newWidth > 150 && newWidth < 400) {
+                    document.getElementById("playMusic").style.width = newWidth + "px";
+                }
+            }
+        });
+
+        document.addEventListener("mouseup", function () {
+            isResizing = false;
+            currentDrag = null;
+        });
+    </script>
+</body>
+
+</html>
